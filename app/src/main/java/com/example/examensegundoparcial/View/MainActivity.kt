@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.examensegundoparcial.R
 import com.example.examensegundoparcial.ViewModel.UserViewModel
 import com.example.examensegundoparcial.core.ServiceBuilder
@@ -33,12 +34,20 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun initObservables() {
-        userViewModel.userModel.observe(this, Observer { user ->
-            binding.tvUserName.text = user.name.first
-            binding.tvEmail.text = user.email
-            binding.tvBirthDay.text = user.dob.age
-            binding.tvDirection.text = user.location.city + ", " + user.location.state + ", " + user.location.country
-            binding.tvNumber.text = user.phone
-            binding.tvPassword.text = user.login.password
-        })    }
+        try {
+            userViewModel.userModel.observe(this, Observer { user ->
+                binding.tvUserName.text = user.name.first
+                binding.tvEmail.text = user.email
+                binding.tvBirthDay.text = user.dob.date
+                binding.tvDirection.text = user.location.city + ", " + user.location.state
+                binding.tvNumber.text = user.phone
+                binding.tvPassword.text = user.login.password
+                Glide.with(this)
+                    .load(user.picture.large)
+                    .into(binding.ivUserImage)
+            })
+        }catch (e: Exception ){
+            println(e.message)
+        }
+    }
 }
