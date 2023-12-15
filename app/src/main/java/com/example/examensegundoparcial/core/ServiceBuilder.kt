@@ -1,15 +1,15 @@
 package com.example.examensegundoparcial.core
 
-import com.example.examensegundoparcial.Model.Network.UserService
+import com.example.examensegundoparcial.Model.Network.ApiClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ServiceBuilder {
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://randomuser.me/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val userService: UserService = retrofit.create(UserService::class.java)
+    fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://api.sampleapis.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 }
